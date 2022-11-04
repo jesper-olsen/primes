@@ -8,7 +8,7 @@ def prime_sieve(N):
     #for i,x in enumerate(l[:q]): #slower?!
     for i,x in enumerate(l):
         if x:
-            for y in range(i+i,N,i):
+            for y in range(i*i,N,i):
                 l[y]=False
     return [i for i,x in enumerate(l) if x]
 

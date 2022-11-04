@@ -7,7 +7,7 @@ fn prime_sieve(n:usize) -> Vec<usize> {
     //let q=l.len();
     for i in 0..q {
         if l[i] {
-            for y in (i+i..n).step_by(i) {
+            for y in (i*i..n).step_by(i) {
                 l[y]=false;
             }
         }
