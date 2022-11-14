@@ -21,7 +21,7 @@ fn prime_sieve(n:usize) -> Vec<usize> {
 }
 
 fn main() {
-    let n = usize::pow(10,7);
+    let n = usize::pow(10,9);
     let l=prime_sieve(n);
     println!("n: {}, #primes: {}",n,l.len());
     println!("{:?}",l[0..5].to_vec());
