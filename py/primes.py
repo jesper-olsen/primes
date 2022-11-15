@@ -7,14 +7,26 @@ def prime_sieve(n):
     l=[True]*n
     l[0]=False
     l[1]=False
-    #q=math.ceil(math.sqrt(len(l)))
-    #for i,x in enumerate(l[:q]): #slower?!
     for i,x in enumerate(l):
         if x:
             yield i
             for y in range(i*i,n,i):  #note - composite numbers cleared multiple times 
                 l[y]=False
-    
+
+def prime_sieve_bv(n):
+    """same as prime_sieve - but use bitvector instead of list of bool; slower, but more memory efficient
+       todo: shift bits insead of calculate powers
+    """
+    l=sum((2**i for i in range(n))) # bit vector - set all 
+    l^=2**0
+    l^=2**1
+    q=math.ceil(math.sqrt(n))
+    for i in range(n):
+        if l&2**i:           
+            yield i
+            for y in range(i*i,n,i):  #note - composite numbers cleared multiple times 
+                l&=~2**y
+
 def seg_prime_sieve(n):
     """Segmented sieve of Eratosthenes - calc all primes up to n
        Complexity: Time O(nloglog(n)), Space O(sqrt(n))
@@ -104,10 +116,11 @@ def sieve_of_pritchard(n):
     yield from s.generate()
 
 if __name__=="__main__":
-    N=10**7    
+    N=10**5    
 
-    #primes=seg_prime_sieve(N)
     #primes=prime_sieve(N)
+    #primes=prime_sieve_bv(N)
+    #primes=seg_prime_sieve(N)
     primes=sieve_of_pritchard(N)
     for p in primes:
         print(p)
