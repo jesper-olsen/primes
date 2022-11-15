@@ -1,3 +1,4 @@
+import argparse
 import math 
 
 def prime_sieve(n):
@@ -15,12 +16,10 @@ def prime_sieve(n):
 
 def prime_sieve_bv(n):
     """same as prime_sieve - but use bitvector instead of list of bool; slower, but more memory efficient
-       todo: shift bits insead of calculate powers
     """
     l=sum((2**i for i in range(n))) # bit vector - set all 
     l^=2**0
     l^=2**1
-    q=math.ceil(math.sqrt(n))
     for i in range(n):
         if l&2**i:           
             yield i
@@ -116,7 +115,11 @@ def sieve_of_pritchard(n):
     yield from s.generate()
 
 if __name__=="__main__":
-    N=10**5    
+    parser=argparse.ArgumentParser("Calculate all primes up to some integer")
+    parser.add_argument('-n', type=int, default=10**2, help="upper end of interval")
+    args=parser.parse_args()
+
+    N=args.n
 
     #primes=prime_sieve(N)
     #primes=prime_sieve_bv(N)
