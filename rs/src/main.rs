@@ -1,5 +1,6 @@
 //Sieve of Eratosthenes - calc all primes below n
-fn prime_sieve(n:usize) -> Vec<usize> {
+//fn prime_sieve(n:usize) -> Vec<usize> {
+fn prime_sieve(n:usize) -> impl Iterator<Item=usize> {
     let mut l=vec![true;n];
     l[0]=false;
     l[1]=false;
@@ -13,16 +14,16 @@ fn prime_sieve(n:usize) -> Vec<usize> {
         }
     }
 
-    l.iter()
+    l.into_iter()
     .enumerate()
-    .filter(|(_a,b)| **b)
+    .filter(|(_a,b)| *b)
     .map(|(a,_b)|a)
-    .collect::<Vec<usize>>()
+    //.collect::<Vec<usize>>()
 }
 
 fn main() {
     let n = usize::pow(10,9);
-    let l=prime_sieve(n);
-    println!("n: {}, #primes: {}",n,l.len());
-    println!("{:?}",l[0..5].to_vec());
+    for p in prime_sieve(n) {  
+        println!("{}", p);
+    }   
 }

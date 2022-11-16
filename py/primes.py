@@ -1,5 +1,6 @@
 import argparse
 import math 
+import sys
 
 def prime_sieve(n):
     """Sieve of Eratosthenes - calc all primes below n 
@@ -33,7 +34,6 @@ def seg_prime_sieve(n):
     delta=math.ceil(math.sqrt(n))    #segment size - at least sqrt(n)
     primes=list(prime_sieve(delta+1))
     yield from primes          
-    new_primes=[]      
     for left in range(delta+1,n+1,delta):
         right=min(left+delta-1,n)
         l=[True]*(right-left+1)
@@ -43,76 +43,44 @@ def seg_prime_sieve(n):
         yield from [i+left for i,x in enumerate(l) if x]
 
 
-class SieveOfPritchard:
-   """ Paul Pritchard's Wheel Sieve 
-       Complexity: Time O(n/loglog(n)), Space O(n)
-       See "Explaining the Wheel Sieve", Paul Pritchard, Acta Informatica 17, 477-485 (1982).
-   """  
-   def __init__(self, n):
-       self.n=n
-       self.w=[1]*(n//4+5)
-       self.d=[True]*(n+1)
-       self.length=2
-       self.w_end=0
+class Wheel:
+    def __init__(self):
+        self.w=[1]
+        self.length=2
 
-   def extend(self, to):
-       i=0
-       j=self.w_end
-       x=self.length+1
-       while x<=to:
-           j+=1
-           self.w[j]=x
-           self.d[x]=False
-           i+=1
-           x=self.length+self.w[i]
-       self.length=to
-       self.w_end=j
+    def __str__(self):
+        return f'{self.length=}\n{self.w=}'
 
-   def delete(self, p):
-       i=0
-       x=p
-       while x<=self.length:
-           self.d[x]=True
-           i+=1
-           x=p*self.w[i]
-       return i-1
+    def extend(self,n):
+        i=0
+        x=self.w[i]+self.length
+        while x<=n:
+            self.w+=[x]
+            i=i+1
+            x=self.w[i]+self.length
+        self.length=n
 
-   def compress(self, to):
-       j=0
-       for i in range(1,to+1):
-           if not self.d[self.w[i]]:
-               j+=1
-               self.w[j]=self.w[i]
-       if to==self.w_end:
-           self.w_end=j
-       else:
-           for k in range(j+1,to+1):
-               self.w[k]=0
-
-   def generate(self):
-       yield 2
-       p=3
-       while p*p<=self.n:
-           yield p
-           if self.length<self.n:
-               self.extend(min(p*self.length,self.n))
-           imaxf=self.delete(p)
-           if self.length<self.n:
-               self.compress(self.w_end)
-           else:
-               while self.d[self.w[imaxf]]:
-                   imaxf+=1
-               self.compress(imaxf)
-           p=self.w[1]
-       if self.length<self.n:
-           self.extend(self.n)
-       for i in range(1,self.w_end+1):
-           if self.w[i]!=0 and not self.d[self.w[i]]:
-               yield self.w[i]
-
-def sieve_of_pritchard(n):
-    s=SieveOfPritchard(n)
-    yield from s.generate()
+    def delete(self,p):
+        """delete multiples of p"""
+        self.w=[1]+[x for x in self.w[1:] if x%p!=0]
+        
+def sieve_of_pritchard(N):
+    """ Paul Pritchard's Wheel Sieve 
+        Complexity: Time O(n/loglog(n)), Space O(n)
+        https://en.wikipedia.org/wiki/Sieve_of_Pritchard
+    """  
+    W=Wheel()
+    yield 2
+    p=3
+    while p*p<N:
+        if W.length<N:
+            W.extend(min(N,p*W.length))
+        W.delete(p) 
+        yield p
+        p=W.w[1]
+    if W.length<N:
+        W.extend(N)
+    yield from W.w[1:]
 
 if __name__=="__main__":
     parser=argparse.ArgumentParser("Calculate all primes up to some integer")
@@ -125,6 +93,7 @@ if __name__=="__main__":
     #primes=prime_sieve_bv(N)
     #primes=seg_prime_sieve(N)
     primes=sieve_of_pritchard(N)
+
     for p in primes:
         print(p)
         
