@@ -50,9 +50,9 @@ if __name__=="__main__":
 
     N=args.n
 
-    primes=prime_sieve(N)
+    #primes=prime_sieve(N)
     #primes=prime_sieve_bv(N)
-    #primes=seg_prime_sieve(N)
+    primes=seg_prime_sieve(N)
     for p in primes:
         print(p)
         

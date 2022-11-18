@@ -46,48 +46,6 @@ def sieve_of_pritchard(N):
         W.extend(N)
     yield from W.w[1:]
 
-def rolling_sorenson():
-    start=100
-
-    primes=[ 2,  3,  5,  7, 11, 13, 17, 19, 23, 29, 
-            31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 
-            73, 79, 83, 89, 97]
-    n=0
-    while n<len(primes[:start]):
-        yield primes[n]
-        n+=1
-
-    r=math.floor(math.sqrt(start))+1
-    s=r*r
-    delta=r+2   
-
-    T=[] #array of stacks
-    for i in range(delta+1):
-        T+=[[]]
-    for p in prime_sieve(r-1):
-        j=(p-(start%p))%p
-        T[j]+=[p]
-    pos=0
-    n=start
-    while True:
-        isPrime=True
-        while not T[pos]==[]:
-            p=T[pos].pop()
-            T[(pos+p)%delta]+=[p]
-            isPrime=False
-        if n==s:
-            if isPrime:
-                T[(pos+r)%delta]+=[r]
-                isPrime=False
-            r=r+1
-            s=r*r
-        n=n+1
-        pos=(pos+1)%delta
-        if pos==0:
-            delta+=2
-            T+=[[],[]]
-        if isPrime: yield n-1
-
 if __name__=="__main__":
     parser=argparse.ArgumentParser("Calculate all primes up to some integer")
     parser.add_argument('-n', type=int, default=200, help="upper end of interval")

@@ -1,3 +1,12 @@
+use clap::Parser;
+
+#[derive(Parser, Debug)]
+#[command(author, version, about, long_about = None)]
+struct Args {
+    #[arg(short, long, default_value_t=100)]
+    n: usize,
+}
+
 //Sieve of Eratosthenes - calc all primes below n
 //fn prime_sieve(n:usize) -> Vec<usize> {
 fn prime_sieve(n:usize) -> impl Iterator<Item=usize> {
@@ -22,8 +31,10 @@ fn prime_sieve(n:usize) -> impl Iterator<Item=usize> {
 }
 
 fn main() {
-    let n = usize::pow(10,9);
-    for p in prime_sieve(n) {  
+    let args=Args::parse();
+
+    //let n = usize::pow(10,8);
+    for p in prime_sieve(args.n) {  
         println!("{}", p);
     }   
 }
