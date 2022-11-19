@@ -11,3 +11,4 @@ Calculate all primes below a given integer.  Parallel implementations in Python 
 | Rolling Sorenson       | py | 0.393          | 1.228           | 10.217           | 101.13            |                    |
 |                        |    |                |                 |                  |                   |                    |
 | Eratostenes            | rs | 0.389          | 0.636           | 1.125            | 7.517             | 66.74              |
+| Eratostenes BitVec     | rs | 0.392          | 0.462           | 1.168            | 6.621             | 59.174             |
