@@ -16,16 +16,17 @@ def prime_sieve(n):
                 l[y]=False
 
 def prime_sieve_bv(n):
-    """same as prime_sieve - but use bitvector instead of list of bool; slower, but more memory efficient
+    """same as prime_sieve - but use bitvector instead of list of bool; 
     """
-    l=sum((2**i for i in range(n))) # bit vector - set all 
-    l^=2**0
-    l^=2**1
+    #l=sum((2**i for i in range(n))) # bit vector - set all 
+    l=sum((1<<i for i in range(n))) # bit vector - set all 
+    l&=~1<<0
+    l&=~1<<1
     for i in range(n):
-        if l&2**i:           
+        if l&(1<<i):  
             yield i
             for y in range(i*i,n,i):  #note - composite numbers cleared multiple times 
-                l&=~2**y
+                l&=~(1<<y)
 
 def seg_prime_sieve(n):
     """Segmented sieve of Eratosthenes - calc all primes up to n
@@ -51,8 +52,8 @@ if __name__=="__main__":
     N=args.n
 
     #primes=prime_sieve(N)
-    #primes=prime_sieve_bv(N)
-    primes=seg_prime_sieve(N)
+    primes=prime_sieve_bv(N)
+    #primes=seg_prime_sieve(N)
     for p in primes:
         print(p)
         
