@@ -1,12 +1,32 @@
 # primes
 
 ```
-% time cargo run --release
-    Finished release [optimized] target(s) in 0.01s
-     Running `target/release/primes`
-n: 10000000, #primes: 664579
-[2, 3, 5, 7, 11]
-cargo run --release  0.08s user 0.02s system 23% cpu 0.456 total
+ % cargo run --release -- -n 100
+2
+3
+5
+7
+11
+13
+17
+19
+23
+29
+31
+37
+41
+43
+47
+53
+59
+61
+67
+71
+73
+79
+83
+89
+97
 ```
 
 

@@ -1,9 +1,12 @@
+Prime sieves - calculate all primes below a given integer n. Implementations in Python3 and Rust.
 
-Calculate all primes below a given integer.  Parallel implementations in Python and Rust.
+Table shows time in seconds on my laptop for different values of n - 100.000 to 1.000.000.000.
+
+
 
 | #primes / n            |    | 9592 / 10\*\*5 | 78498 / 10\*\*6 | 664579 / 10\*\*7 | 5761455 / 10\*\*8 | 50847534 / 10\*\*9 |
 | ---------------------- | -- | -------------- | --------------- | ---------------- | ----------------- | ------------------ |
-| Eratostenes            | py |                | 0.26            | 2.3              | 23.9              |                    |
+| Eratostenes            | py | 0.142          | 0.26            | 2.3              | 23.9              |                    |
 | Eratosthenes BitVec    | py | 1.176          | 110.5           |                  |                   |                    |
 | Segmented Eratosthenes | py | 0.35           | 0.533           | 2.7              | 23.76             |                    |
 | Pritchard1             | py | 0.396          | 1.281           | 30.406           |                   |                    |
