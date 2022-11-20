@@ -4,7 +4,7 @@
  % cargo build --release
 ```
 
-This builds targets the following targets:
+This builds the following targets:
  * primes - Eratostenes with bit vector
  * pritchard2 - Pritchard's wheel sieve
  * pritchard2bv - Pritchard's wheel sieve with bit vector
