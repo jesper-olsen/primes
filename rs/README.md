@@ -1,7 +1,19 @@
 # primes
 
 ```
- % cargo run --release -- -n 100
+ % cargo build --release
+```
+
+This builds targets the following targets:
+ * primes - Eratostenes with bit vector
+ * pritchard2 - Pritchard's wheel sieve
+ * pritchard2bv - Pritchard's wheel sieve with bit vector
+ * sorenson - Sorenson's rolling sieve - the only incremental algorithm in the list.
+
+Execute each of the targets like so
+
+```
+ % target/release/sorenson -n 100
 2
 3
 5

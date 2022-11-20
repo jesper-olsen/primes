@@ -14,3 +14,6 @@ path = "src/pritchard2.rs"
 [[bin]]
 name = "pritchard2bv"
 path = "src/pritchard2bv.rs"
+[[bin]]
+name = "sorenson"
+path = "src/sorenson.rs"
