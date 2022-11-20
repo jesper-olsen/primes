@@ -15,4 +15,4 @@ Table shows time in seconds on my laptop for different values of n - 100.000 to 
 | Eratostenes BitVec     | rs | 0.392          | 0.462           | 1.168            | 6.621             | 59.174             |
 | Pritchard2             | rs | 0.373          | 0.46            | 1.115            | 6.632             | 58.472             |
 | Pritchard2 BitVec      | rs | 0.04           | 0.112           | 0.689            | 5.921             | 52.746             |
-| Rolling Sorenson       | rs | 0.044          | 0.161           | 1.191            | 10.338            | 104.76             |
+| Rolling Sorenson       | rs | 0.028          | 0.157           | 1.191            | 10.075            | 97.4               |
