@@ -23,11 +23,7 @@ fn prime_sieve(n: usize) -> impl Iterator<Item = usize> {
         }
     }
 
-    l.into_iter()
-        .enumerate()
-        .filter(|(_a, b)| *b)
-        .map(|(a, _b)| a)
-    //.collect::<Vec<usize>>()
+    (2..n).filter(move |&i| l[i])
 }
 
 fn prime_sieve_bv(n: usize) -> impl Iterator<Item = usize> {
