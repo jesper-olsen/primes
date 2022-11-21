@@ -15,7 +15,8 @@ fn prime_sieve(n: usize) -> impl Iterator<Item = usize> {
     l[0] = false;
     l[1] = false;
     let q = f64::sqrt(l.len() as f64) as usize + 1;
-    for i in 0..q {
+
+    for i in 2..q {
         if l[i] {
             for y in (i * i..n).step_by(i) {
                 l[y] = false;
@@ -42,7 +43,7 @@ fn prime_sieve_bv(n: usize) -> impl Iterator<Item = usize> {
     l[1 / nbits] &= !(1 << 1 % nbits);
 
     let q = f64::sqrt(n as f64) as usize + 1;
-    for i in 0..q {
+    for i in 2..q {
         if l[i / nbits] & 1 << i % nbits != 0 {
             for y in (i * i..n).step_by(i) {
                 l[y / nbits] &= !(1 << y % nbits);
