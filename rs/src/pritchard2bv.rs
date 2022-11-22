@@ -1,13 +1,3 @@
-use clap::Parser;
-
-#[derive(Parser, Debug)]
-#[command(author, version, about, long_about = None)]
-struct Args {
-    #[arg(short, long, default_value_t = 100)]
-    ///primes below
-    n: usize,
-}
-
 // same as pritchard2.rs, but using Wheel with bit vectors Vec<bool>
 struct Wheel {
     n: usize,
@@ -125,12 +115,4 @@ pub fn sieve(n: usize) -> impl Iterator<Item = usize> {
     }
 
     primes.into_iter()
-}
-
-fn main() {
-    let args = Args::parse();
-
-    for p in sieve(args.n) {
-        println!("{}", p);
-    }
 }

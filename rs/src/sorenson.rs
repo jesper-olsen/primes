@@ -15,7 +15,7 @@ struct Args {
 // "Two Compact Incremental Prime Sieves", Jonathan P. Sorenson, Journal of Computation and Mathematics, 2015
 // https://arxiv.org/abs/1503.02592
 
-pub fn rolling_sorenson() -> impl Iterator<Item = usize> {
+pub fn sieve() -> impl Iterator<Item = usize> {
     let start = 100;
     let mut r = f64::sqrt(start as f64) as usize + 1;
     let mut s = r * r;
@@ -58,7 +58,7 @@ pub fn rolling_sorenson() -> impl Iterator<Item = usize> {
 fn main() {
     let args = Args::parse();
 
-    for p in rolling_sorenson().take_while(|&p| p < args.n) {
+    for p in sieve().take_while(|&p| p < args.n) {
         println!("{}", p);
     }
 }
