@@ -93,7 +93,7 @@ impl Wheel {
     }
 }
 
-fn pritchard2(n: usize) -> impl Iterator<Item = usize> {
+pub fn sieve(n: usize) -> impl Iterator<Item = usize> {
     let mut wheel = Wheel::new(n);
     let mut primes = vec![2];
     let mut p = 3;
@@ -130,7 +130,7 @@ fn pritchard2(n: usize) -> impl Iterator<Item = usize> {
 fn main() {
     let args = Args::parse();
 
-    for p in pritchard2(args.n) {
+    for p in sieve(args.n) {
         println!("{}", p);
     }
 }

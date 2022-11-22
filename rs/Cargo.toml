@@ -7,13 +7,3 @@ edition = "2021"
 
 [dependencies]
 clap = { version = "4.0.26", features = ["derive"] }
-
-[[bin]]
-name = "pritchard2"
-path = "src/pritchard2.rs"
-[[bin]]
-name = "pritchard2bv"
-path = "src/pritchard2bv.rs"
-[[bin]]
-name = "sorenson"
-path = "src/sorenson.rs"
