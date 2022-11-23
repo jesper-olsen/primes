@@ -4,8 +4,21 @@
 //! "Two Compact Incremental Prime Sieves", Jonathan P. Sorenson, Journal of Computation and Mathematics, 2015
 //! <https://arxiv.org/abs/1503.02592>
 
+/// Sorenson's rolling sieve - return primes less than n.
+/// ```rust
+/// let l=sieve(10);
+/// assert_eq(l,vec![2,3,5,7]);
+/// ```
+pub fn sieve(n: usize) -> Vec<usize> {
+    sieve_it().take_while(|&p| p < n).collect()
+}
+
 /// Sorenson's rolling sieve - return iterator with no end.
-pub fn sieve() -> impl Iterator<Item = usize> {
+/// ```
+/// let l: Vec<usize> = sieve_it().take_while(|&p| p < 10).collect();
+/// assert_eq!(l, vec![2, 3, 5, 7]);
+/// ```
+pub fn sieve_it() -> impl Iterator<Item = usize> {
     let start = 100;
     let mut r = f64::sqrt(start as f64) as usize + 1;
     let mut s = r * r;
@@ -46,7 +59,12 @@ pub fn sieve() -> impl Iterator<Item = usize> {
 }
 
 #[test]
-fn test_sorenson() {
-    let l: Vec<usize> = sieve().take_while(|&p| p < 10).collect();
+fn test_sieve_it() {
+    let l: Vec<usize> = sieve_it().take_while(|&p| p < 10).collect();
+    assert_eq!(l, vec![2, 3, 5, 7]);
+}
+#[test]
+fn test_sieve() {
+    let l: Vec<usize> = sieve(10);
     assert_eq!(l, vec![2, 3, 5, 7]);
 }

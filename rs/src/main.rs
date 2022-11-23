@@ -32,7 +32,7 @@ fn main() {
     //for p in eratosthenes::sieve(args.n) {
     //for p in pritchard2::sieve(args.n) {
     //for p in pritchard2bv::sieve(args.n) {
-    for p in sorenson::sieve().take_while(|&p| p < args.n) {
+    for p in sorenson::sieve(args.n) {
         println!("{}", p);
     }
     eprintln!("That took {:?} ", Instant::now() - start);

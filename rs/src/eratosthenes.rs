@@ -1,5 +1,5 @@
-//! Eratosthenes - calculate all primes below some integer N
-//! See <https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes>
+//! [Eratosthenes prime sieve](https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes)
+//! - calculate all primes below some integer N.
 
 /// Calc all primes below n
 /// ```
