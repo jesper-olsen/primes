@@ -1,7 +1,5 @@
-
 //! Sorenson's rolling sieve - incremental prime sieve.
 //! Complexity: O(nloglogn) time, O(sqrt(n)log(n)) bits,
-//!             O(logn/loglogn) incremental
 //! See algorithm description in paper:
 //! "Two Compact Incremental Prime Sieves", Jonathan P. Sorenson, Journal of Computation and Mathematics, 2015
 //! <https://arxiv.org/abs/1503.02592>
@@ -47,9 +45,8 @@ pub fn sieve() -> impl Iterator<Item = usize> {
     }))
 }
 
-    #[test]
-    fn test_sorenson() {
-        let l:Vec<usize>=sieve().take_while(|&p| p<10).collect();
-        assert_eq!(l, vec![2,3,5,7]);
-    }
-
+#[test]
+fn test_sorenson() {
+    let l: Vec<usize> = sieve().take_while(|&p| p < 10).collect();
+    assert_eq!(l, vec![2, 3, 5, 7]);
+}

@@ -45,16 +45,16 @@ pub fn sieve_bv(n: usize) -> impl Iterator<Item = usize> {
         }
     }
 
-    (2..n).filter(move |i| l[i / nbits] & 1 << i % nbits != 0) 
+    (2..n).filter(move |i| l[i / nbits] & 1 << i % nbits != 0)
 }
 
 #[test]
 fn test_eratosthenes() {
-    let l:Vec<usize>=sieve(10).collect();
-    assert_eq!(l, vec![2,3,5,7]);
+    let l: Vec<usize> = sieve(10).collect();
+    assert_eq!(l, vec![2, 3, 5, 7]);
 }
 #[test]
 fn test_eratosthenes_bv() {
-    let l:Vec<usize>=sieve_bv(10).collect();
-    assert_eq!(l, vec![2,3,5,7]);
+    let l: Vec<usize> = sieve_bv(10).collect();
+    assert_eq!(l, vec![2, 3, 5, 7]);
 }

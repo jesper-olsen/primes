@@ -1,4 +1,4 @@
-//! same as pritchard2.rs, but using Wheel with bit vectors Vec<bool>.
+//! same as pritchard2.rs, but more memory efficient (bit vectors instead of 'array of bool').
 //! See <https://en.wikipedia.org/wiki/Sieve_of_Pritchard>
 
 struct Wheel {
@@ -85,9 +85,7 @@ impl Wheel {
     }
 }
 
-/// Pritchard's wheel sieve 
-/// uses a bitvector for storing 'array of bool'
-/// See <https://en.wikipedia.org/wiki/Sieve_of_Pritchard>
+/// Pritchard's wheel sieve
 pub fn sieve(n: usize) -> impl Iterator<Item = usize> {
     let mut wheel = Wheel::new(n);
     let mut primes = vec![2];
@@ -124,6 +122,6 @@ pub fn sieve(n: usize) -> impl Iterator<Item = usize> {
 
 #[test]
 fn test_pritchard2bv() {
-    let l:Vec<usize>=sieve(10).collect();
-    assert_eq!(l, vec![2,3,5,7]);
+    let l: Vec<usize> = sieve(10).collect();
+    assert_eq!(l, vec![2, 3, 5, 7]);
 }

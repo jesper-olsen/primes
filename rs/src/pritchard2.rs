@@ -78,7 +78,7 @@ impl Wheel {
     }
 }
 
-/// Pritchard's wheel sieve 
+/// Pritchard's wheel sieve
 /// See <https://en.wikipedia.org/wiki/Sieve_of_Pritchard>
 pub fn sieve(n: usize) -> impl Iterator<Item = usize> {
     let mut wheel = Wheel::new(n);
@@ -111,6 +111,6 @@ pub fn sieve(n: usize) -> impl Iterator<Item = usize> {
 
 #[test]
 fn test_pritchard2() {
-    let l:Vec<usize>=sieve(10).collect();
-    assert_eq!(l, vec![2,3,5,7]);
+    let l: Vec<usize> = sieve(10).collect();
+    assert_eq!(l, vec![2, 3, 5, 7]);
 }
