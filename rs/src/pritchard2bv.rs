@@ -116,3 +116,9 @@ pub fn sieve(n: usize) -> impl Iterator<Item = usize> {
 
     primes.into_iter()
 }
+
+#[test]
+fn test_pritchard2bv() {
+    let l:Vec<usize>=sieve(10).collect();
+    assert_eq!(l, vec![2,3,5,7]);
+}

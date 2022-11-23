@@ -1,12 +1,3 @@
-use clap::Parser;
-
-#[derive(Parser, Debug)]
-#[command(author, version, about, long_about = None)]
-struct Args {
-    #[arg(short, long, default_value_t = 100)]
-    ///primes below
-    n: usize,
-}
 
 // Sorenson's rolling sieve - yield next prime each time it is called.
 // Complexity: O(nloglogn) time, O(sqrt(n)log(n)) bits,
@@ -55,10 +46,9 @@ pub fn sieve() -> impl Iterator<Item = usize> {
     }))
 }
 
-fn main() {
-    let args = Args::parse();
-
-    for p in sieve().take_while(|&p| p < args.n) {
-        println!("{}", p);
+    #[test]
+    fn test_sorenson() {
+        let l:Vec<usize>=sieve().take_while(|&p| p<10).collect();
+        assert_eq!(l, vec![2,3,5,7]);
     }
-}
+

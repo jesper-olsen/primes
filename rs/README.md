@@ -2,7 +2,6 @@
 
 ```
  % cargo build --release
-```
 2
 3
 5

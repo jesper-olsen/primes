@@ -1,13 +1,3 @@
-use clap::{Parser};
-
-#[derive(Parser, Debug)]
-#[command(author, version, about, long_about = None)]
-struct Args {
-    #[arg(short, long, default_value_t = 100)]
-    ///primes below
-    n: usize,
-}
-
 //Sieve of Eratosthenes - calc all primes below n
 pub fn sieve(n: usize) -> impl Iterator<Item = usize> {
     let mut l = vec![true; n];
@@ -49,11 +39,13 @@ pub fn sieve_bv(n: usize) -> impl Iterator<Item = usize> {
     (2..n).filter(move |i| l[i / nbits] & 1 << i % nbits != 0)
 }
 
-fn main() {
-    let args = Args::parse();
-
-    for p in sieve_bv(args.n) {
-    //for p in sieve(args.n) {
-        println!("{}", p);
-    }
+#[test]
+fn test_eratosthenes() {
+    let l:Vec<usize>=sieve(10).collect();
+    assert_eq!(l, vec![2,3,5,7]);
+}
+#[test]
+fn test_eratosthenes_bv() {
+    let l:Vec<usize>=sieve_bv(10).collect();
+    assert_eq!(l, vec![2,3,5,7]);
 }

@@ -1,13 +1,3 @@
-use clap::Parser;
-
-#[derive(Parser, Debug)]
-#[command(author, version, about, long_about = None)]
-struct Args {
-    #[arg(short, long, default_value_t = 100)]
-    ///primes below
-    n: usize,
-}
-
 struct Wheel {
     n: usize,
     w: Vec<usize>,
@@ -114,10 +104,8 @@ pub fn sieve(n: usize) -> impl Iterator<Item = usize> {
     primes.into_iter()
 }
 
-fn main() {
-    let args = Args::parse();
-
-    for p in sieve(args.n) {
-        println!("{}", p);
-    }
+#[test]
+fn test_pritchard2() {
+    let l:Vec<usize>=sieve(10).collect();
+    assert_eq!(l, vec![2,3,5,7]);
 }
