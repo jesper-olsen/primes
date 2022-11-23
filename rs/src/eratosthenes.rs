@@ -1,4 +1,12 @@
-//Sieve of Eratosthenes - calc all primes below n
+//! Eratosthenes - calculate all primes below some integer N
+//! See <https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes>
+
+/// Calc all primes below n
+/// ```
+/// for p in sieve(10) {
+///     println!(p);
+/// }
+/// ```
 pub fn sieve(n: usize) -> impl Iterator<Item = usize> {
     let mut l = vec![true; n];
     let q = f64::sqrt(l.len() as f64) as usize + 1;
@@ -14,7 +22,8 @@ pub fn sieve(n: usize) -> impl Iterator<Item = usize> {
     (2..n).filter(move |&i| l[i])
 }
 
-// same as sieve(), but with BitVec
+/// same as sieve(), but more memory efficient  
+/// - uses bitvectors for storing the 'array of bool'
 pub fn sieve_bv(n: usize) -> impl Iterator<Item = usize> {
     let nbits = usize::BITS as usize;
     let mut l: Vec<usize> = vec![usize::MAX; n / nbits + 1];
@@ -31,12 +40,12 @@ pub fn sieve_bv(n: usize) -> impl Iterator<Item = usize> {
     for i in 2..q {
         if l[i / nbits] & 1 << i % nbits != 0 {
             for y in (i * i..n).step_by(i) {
-                l[y / nbits] &= !(1 << y % nbits);
+                l[y / nbits] &= !(1 << y % nbits); // set false
             }
         }
     }
 
-    (2..n).filter(move |i| l[i / nbits] & 1 << i % nbits != 0)
+    (2..n).filter(move |i| l[i / nbits] & 1 << i % nbits != 0) 
 }
 
 #[test]

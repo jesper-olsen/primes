@@ -1,3 +1,6 @@
+//! Pritchard's Wheel Sieve - calculate all primes below some integer N.
+//! See <https://en.wikipedia.org/wiki/Sieve_of_Pritchard>
+
 struct Wheel {
     n: usize,
     w: Vec<usize>,
@@ -75,6 +78,8 @@ impl Wheel {
     }
 }
 
+/// Pritchard's wheel sieve 
+/// See <https://en.wikipedia.org/wiki/Sieve_of_Pritchard>
 pub fn sieve(n: usize) -> impl Iterator<Item = usize> {
     let mut wheel = Wheel::new(n);
     let mut primes = vec![2];

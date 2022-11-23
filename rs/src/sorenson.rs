@@ -1,11 +1,12 @@
 
-// Sorenson's rolling sieve - yield next prime each time it is called.
-// Complexity: O(nloglogn) time, O(sqrt(n)log(n)) bits,
-//             O(logn/loglogn) incremental
-// See algorithm description in paper:
-// "Two Compact Incremental Prime Sieves", Jonathan P. Sorenson, Journal of Computation and Mathematics, 2015
-// https://arxiv.org/abs/1503.02592
+//! Sorenson's rolling sieve - incremental prime sieve.
+//! Complexity: O(nloglogn) time, O(sqrt(n)log(n)) bits,
+//!             O(logn/loglogn) incremental
+//! See algorithm description in paper:
+//! "Two Compact Incremental Prime Sieves", Jonathan P. Sorenson, Journal of Computation and Mathematics, 2015
+//! <https://arxiv.org/abs/1503.02592>
 
+/// Sorenson's rolling sieve - return iterator with no end.
 pub fn sieve() -> impl Iterator<Item = usize> {
     let start = 100;
     let mut r = f64::sqrt(start as f64) as usize + 1;
