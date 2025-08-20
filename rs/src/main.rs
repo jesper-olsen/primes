@@ -25,10 +25,9 @@ struct Args {
 fn main() {
     let args = Args::parse();
     let start = Instant::now();
-    //let duration=Duration::new(5,0);
 
-    //for p in eratosthenes_bv(args.n) {
     //for p in eratosthenes::sieve(args.n) {
+    //for p in eratosthenes::sieve_bv(args.n) {
     //for p in pritchard2::sieve(args.n) {
     //for p in pritchard2bv::sieve(args.n) {
     for p in sorenson::sieve(args.n) {

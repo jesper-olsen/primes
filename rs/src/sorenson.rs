@@ -7,7 +7,7 @@
 /// Sorenson's rolling sieve - return primes less than n.
 /// ```rust
 /// let l=sieve(10);
-/// assert_eq(l,vec![2,3,5,7]);
+/// assert_eq!(l,vec![2,3,5,7]);
 /// ```
 pub fn sieve(n: usize) -> Vec<usize> {
     sieve_it().take_while(|&p| p < n).collect()
