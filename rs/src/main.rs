@@ -1,6 +1,5 @@
-use clap::Parser;
-//use::std::time::{Duration,Instant};
 use ::std::time::Instant;
+use clap::Parser;
 
 #[allow(dead_code)]
 mod eratosthenes;
@@ -33,7 +32,7 @@ fn main() {
     //for p in pritchard2::sieve(args.n) {
     //for p in pritchard2bv::sieve(args.n) {
     for p in sorenson::sieve(args.n) {
-        println!("{}", p);
+        println!("{p}");
     }
     eprintln!("That took {:?} ", Instant::now() - start);
 }

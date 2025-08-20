@@ -6,31 +6,31 @@ struct Wheel {
     w: Vec<usize>,
     //d: Vec<bool>,
     d: Vec<usize>,
-    w_end: usize,
-    w_end_max: usize,
+    end: usize,
+    end_max: usize,
     length: usize,
-    imaxf: usize,
+    max_index: usize,
 }
 
 impl Wheel {
     pub fn new(n: usize) -> Self {
         let mut wheel = Wheel {
-            n: n,
+            n,
             w: vec![0; n / 4 + 5],
             //d: vec![false;n+1],
-            d: vec![usize::MAX as usize; n / usize::BITS as usize + 1],
-            w_end: 0,
-            w_end_max: 0,
+            d: vec![usize::MAX; n / usize::BITS as usize + 1],
+            end: 0,
+            end_max: 0,
             length: 2,
-            imaxf: 0,
+            max_index: 0,
         };
         wheel.w[0] = 1;
         wheel
     }
 
-    pub fn extend(self: &mut Self, n: usize) {
+    pub fn extend(&mut self, n: usize) {
         let mut i = 0;
-        let mut j = self.w_end;
+        let mut j = self.end;
         let mut x = self.length + 1;
         while x <= n {
             j += 1;
@@ -41,13 +41,13 @@ impl Wheel {
             x = self.length + self.w[i];
         }
         self.length = n;
-        self.w_end = j;
-        if self.w_end > self.w_end_max {
-            self.w_end_max = self.w_end;
+        self.end = j;
+        if self.end > self.end_max {
+            self.end_max = self.end;
         }
     }
 
-    pub fn delete(self: &mut Self, p: usize) {
+    pub fn delete(&mut self, p: usize) {
         let mut i = 0;
         let mut x = p;
         while x <= self.length {
@@ -56,29 +56,29 @@ impl Wheel {
             i += 1;
             x = p * self.w[i];
         }
-        self.imaxf = i - 1;
+        self.max_index = i - 1;
     }
 
-    pub fn compress(self: &mut Self) {
+    pub fn compress(&mut self) {
         let to = if self.length < self.n {
-            self.w_end
+            self.end
         } else {
-            self.imaxf
+            self.max_index
         };
         let mut j = 0;
-        for i in 1..to + 1 {
+        for i in 1..=to {
             //if !self.d[self.w[i]] {
-            if !(self.d[self.w[i] / usize::BITS as usize] & (1 << self.w[i] % usize::BITS as usize)
-                != 0)
+            if self.d[self.w[i] / usize::BITS as usize] & (1 << self.w[i] % usize::BITS as usize)
+                == 0
             {
                 j += 1;
                 self.w[j] = self.w[i];
             }
         }
-        if to == self.w_end {
-            self.w_end = j;
+        if to == self.end {
+            self.end = j;
         } else {
-            for k in j + 1..to + 1 {
+            for k in j + 1..=to {
                 self.w[k] = 0;
             }
         }
@@ -87,6 +87,10 @@ impl Wheel {
 
 /// Pritchard's wheel sieve
 pub fn sieve(n: usize) -> impl Iterator<Item = usize> {
+    if n < 2 {
+        return Vec::new().into_iter();
+    }
+
     let mut wheel = Wheel::new(n);
     let mut primes = vec![2];
     let mut p = 3;
@@ -106,12 +110,12 @@ pub fn sieve(n: usize) -> impl Iterator<Item = usize> {
         wheel.extend(n);
     }
 
-    for i in 1..wheel.w_end + 1 {
+    for i in 1..=wheel.end {
         //if wheel.w[i]!=0 && !wheel.d[wheel.w[i]] {
         if wheel.w[i] != 0
-            && !(wheel.d[wheel.w[i] / usize::BITS as usize]
+            && (wheel.d[wheel.w[i] / usize::BITS as usize]
                 & (1 << wheel.w[i] % usize::BITS as usize)
-                != 0)
+                == 0)
         {
             primes.push(wheel.w[i]);
         }

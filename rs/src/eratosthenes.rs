@@ -4,12 +4,12 @@
 /// Calc all primes below n
 /// ```
 /// for p in sieve(10) {
-///     println!(p);
+///     println!("{p}");
 /// }
 /// ```
 pub fn sieve(n: usize) -> impl Iterator<Item = usize> {
     let mut l = vec![true; n];
-    let q = f64::sqrt(l.len() as f64) as usize + 1;
+    let q = f64::sqrt(n as f64) as usize + 1;
 
     for i in 2..q {
         if l[i] {

@@ -29,7 +29,7 @@ pub fn sieve_it() -> impl Iterator<Item = usize> {
         97,
     ];
 
-    for p in primes.into_iter().take_while(|&p| p <= r - 1) {
+    for p in primes.into_iter().take_while(|&p| p < r) {
         let j = (p - (start % p)) % p;
         t[j].push(p);
     }
