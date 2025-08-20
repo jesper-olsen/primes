@@ -7,7 +7,6 @@
 ///     println!("{p}");
 /// }
 /// ```
-
 pub fn sieve(n: usize) -> impl Iterator<Item = usize> {
     let mut is_prime = vec![true; n];
     let sqrt_n = (n as f64).sqrt() as usize + 1;
