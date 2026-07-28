@@ -39,16 +39,14 @@ pub fn sieve_bv(n: usize) -> impl Iterator<Item = usize> {
     for i in 2..n.isqrt() + 1 {
         if is_prime[i / nbits] & 1 << i % nbits != 0 {
             for y in (i * i..n).step_by(i) {
-                //is_prime[y / nbits] &= !(1 << y % nbits); // set false
-                unsafe {
-                    *is_prime.get_unchecked_mut(y / nbits) &= !(1 << (y % nbits));
-                } // set false
+                is_prime[y / nbits] &= !(1 << y % nbits); // set false
             }
         }
     }
 
     (2..n).filter(move |i| is_prime[i / nbits] & 1 << i % nbits != 0)
 }
+
 
 #[test]
 fn test_eratosthenes() {
