@@ -26,7 +26,7 @@ pub fn sieve(n: usize) -> impl Iterator<Item = usize> {
 /// - uses bitvectors for storing the 'array of bool'
 pub fn sieve_bv(n: usize) -> impl Iterator<Item = usize> {
     let nbits = usize::BITS as usize;
-    let mut is_prime: Vec<usize> = vec![usize::MAX; n / nbits + 1];
+    let mut is_prime: Vec<usize> = vec![usize::MAX; n.div_ceil(nbits)];
     // set_bit k:
     // l[k/usize::BITS] |= 1<<k%usize::BITS
 
@@ -36,11 +36,13 @@ pub fn sieve_bv(n: usize) -> impl Iterator<Item = usize> {
     // is_set k
     // l[k/usize::BITS] & (1<<k%usize::BITS) != 0
 
-    let sqrt_n = (n as f64).sqrt() as usize + 1;
-    for i in 2..sqrt_n {
+    for i in 2..n.isqrt() + 1 {
         if is_prime[i / nbits] & 1 << i % nbits != 0 {
             for y in (i * i..n).step_by(i) {
-                is_prime[y / nbits] &= !(1 << y % nbits); // set false
+                //is_prime[y / nbits] &= !(1 << y % nbits); // set false
+                unsafe {
+                    *is_prime.get_unchecked_mut(y / nbits) &= !(1 << (y % nbits));
+                } // set false
             }
         }
     }
