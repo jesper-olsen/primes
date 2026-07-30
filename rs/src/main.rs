@@ -1,13 +1,10 @@
-use ::std::time::Instant;
+use std::time::Instant;
 use clap::{Parser, ValueEnum};
+use std::io::{self, BufWriter, Write};
 
-#[allow(dead_code)]
 mod eratosthenes;
-#[allow(dead_code)]
 mod pritchard2;
-#[allow(dead_code)]
 mod pritchard2bv;
-#[allow(dead_code)]
 mod sorenson;
 
 /// Available prime sieving algorithms
@@ -15,23 +12,10 @@ mod sorenson;
 enum Algorithm {
     Eratosthenes,
     EratosthenesBV,
+    EratosthenesSegmented,
     Pritchard2,
     Pritchard2BV,
     Sorenson,
-}
-
-impl std::str::FromStr for Algorithm {
-    type Err = String;
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
-        match s.to_lowercase().as_str() {
-            "eratosthenes" => Ok(Algorithm::Eratosthenes),
-            "eratosthenesbv" => Ok(Algorithm::EratosthenesBV),
-            "pritchard2" => Ok(Algorithm::Pritchard2),
-            "pritchard2bv" => Ok(Algorithm::Pritchard2BV),
-            "sorenson" => Ok(Algorithm::Sorenson),
-            _ => Err(format!("Unknown algorithm: {s}")),
-        }
-    }
 }
 
 #[derive(Parser, Debug)]
@@ -45,9 +29,9 @@ struct Args {
     #[arg(short, long, default_value = "eratosthenes")]
     algorithm: Algorithm,
 
-    #[arg(short, long, default_value_t = false)]
+    #[arg(short, long, default_value_t = true)]
     ///time it
-    t: bool,
+    time: bool,
 }
 
 /// Several different prime sieves implemented here
@@ -55,16 +39,27 @@ fn main() {
     let args = Args::parse();
     let start = Instant::now();
 
-    let iter: Box<dyn Iterator<Item = usize>> = match args.algorithm {
-        Algorithm::Eratosthenes => Box::new(eratosthenes::sieve(args.n)),
-        Algorithm::EratosthenesBV => Box::new(eratosthenes::sieve_bv(args.n)),
-        Algorithm::Pritchard2 => Box::new(pritchard2::sieve(args.n)),
-        Algorithm::Pritchard2BV => Box::new(pritchard2bv::sieve(args.n)),
-        Algorithm::Sorenson => Box::new(sorenson::sieve(args.n).into_iter()),
+    let stdout = io::stdout();
+    let mut handle = BufWriter::new(stdout.lock());
+
+    macro_rules! run_sieve {
+        ($iter:expr) => {
+            for p in $iter {
+                writeln!(handle, "{}", p).unwrap();
+            }
+        };
+    }
+
+    match args.algorithm {
+        Algorithm::Eratosthenes => run_sieve!(eratosthenes::sieve(args.n)),
+        Algorithm::EratosthenesBV => run_sieve!(eratosthenes::sieve_bv(args.n)),
+        Algorithm::EratosthenesSegmented => run_sieve!(eratosthenes::sieve_segmented(args.n)),
+        Algorithm::Pritchard2 => run_sieve!(pritchard2::sieve(args.n)),
+        Algorithm::Pritchard2BV => run_sieve!(pritchard2bv::sieve(args.n)),
+        Algorithm::Sorenson => run_sieve!(sorenson::sieve(args.n)),
     };
 
-    for p in iter {
-        println!("{p}");
+    if args.time {
+        eprintln!("That took {:?} ", Instant::now() - start);
     }
-    eprintln!("That took {:?} ", Instant::now() - start);
 }
