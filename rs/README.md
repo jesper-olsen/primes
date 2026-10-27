@@ -1,7 +1,8 @@
 # primes
 
 ```
- % cargo build --release
+cargo run --release
+That took 59.666µs
 2
 3
 5
